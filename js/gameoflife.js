@@ -73,18 +73,7 @@ const willBeAlive = (cell, state) => {
   }
 };
 
-const calculateNext = (state) => {
-  const corners = this.corners(state);
-  //topRight: [0, 0], bottomLeft: [0, 0]
-  const extendecCorners = {
-    topRight: [corners.topRight[0] + 1, corners.topRight[1] + 1],
-    bottomLeft: [corners.topRight[0] - 1, corners.topRight[1] - 1],
-  };
-  state.forEach((cell) => {
-    willBeAlive(cell, state) ? state.push(cell) : null;
-  });
-  return state;
-};
+const calculateNext = (state) => {};
 
 const iterate = (state, iterations) => {};
 
