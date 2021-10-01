@@ -32,13 +32,12 @@ const corners = (state = []) => {
 const printCells = (state) => {
   const corners = this.corners(state);
   let str = "";
-  for (let i = corners.bottomLeft[0]; i <= corners.topRight[0]; i++) {
-    for (let j = corners.bottomLeft[1]; j <= corners.topRight[1]; j++) {
+  for (let j = corners.topRight[1]; j >= corners.bottomLeft[1]; j--) {
+    for (let i = corners.bottomLeft[0]; i <= corners.topRight[0]; i++) {
       str += printCell([i, j], state) === "\u25A2" ? "▢" : "▣";
     }
     str += "\n";
   }
-  console.log(str);
   return str;
 };
 
@@ -73,11 +72,32 @@ const willBeAlive = (cell, state) => {
   }
 };
 
-const calculateNext = (state) => {};
+const calculateNext = (state) => {
+  const corners = this.corners(state);
+  const newState = [];
+  for (let i = corners.bottomLeft[0] - 1; i <= corners.topRight[0] + 1; i++) {
+    for (let j = corners.bottomLeft[1] - 1; j <= corners.topRight[1] + 1; j++) {
+      if (willBeAlive([i, j], state)) {
+        newState.push([i, j]);
+      }
+    }
+  }
+  return newState;
+};
 
-const iterate = (state, iterations) => {};
+const iterate = (state, iterations) => {
+  const states = [state];
+  for (let i = 0; i < iterations; i++) {
+    const newState = calculateNext(states[states.length - 1]);
+    states.push(newState);
+  }
+  return states;
+};
 
-const main = (pattern, iterations) => {};
+const main = (pattern, iterations) => {
+  const results = iterate(startPatterns[pattern], iterations);
+  results.forEach((r) => console.log(printCells(r)));
+};
 
 const startPatterns = {
   rpentomino: [
