@@ -30,10 +30,14 @@ const corners = (state = []) => {
 };
 
 const printCells = (state) => {
-  const corners = this.corners(state);
+  const cornersCells = corners(state);
   let str = "";
-  for (let j = corners.topRight[1]; j >= corners.bottomLeft[1]; j--) {
-    for (let i = corners.bottomLeft[0]; i <= corners.topRight[0]; i++) {
+  for (let j = cornersCells.topRight[1]; j >= cornersCells.bottomLeft[1]; j--) {
+    for (
+      let i = cornersCells.bottomLeft[0];
+      i <= cornersCells.topRight[0];
+      i++
+    ) {
       str += printCell([i, j], state) === "\u25A2" ? "▢" : "▣";
     }
     str += "\n";
@@ -73,10 +77,18 @@ const willBeAlive = (cell, state) => {
 };
 
 const calculateNext = (state) => {
-  const corners = this.corners(state);
+  const cornersCells = corners(state);
   const newState = [];
-  for (let i = corners.bottomLeft[0] - 1; i <= corners.topRight[0] + 1; i++) {
-    for (let j = corners.bottomLeft[1] - 1; j <= corners.topRight[1] + 1; j++) {
+  for (
+    let i = cornersCells.bottomLeft[0] - 1;
+    i <= cornersCells.topRight[0] + 1;
+    i++
+  ) {
+    for (
+      let j = cornersCells.bottomLeft[1] - 1;
+      j <= cornersCells.topRight[1] + 1;
+      j++
+    ) {
       if (willBeAlive([i, j], state)) {
         newState.push([i, j]);
       }
